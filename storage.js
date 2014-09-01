@@ -9,6 +9,8 @@
             return typeof _storageArea !== 'undefined';
         };
         this.set = function(key, val) {
+            checkKey(key);
+
             if(val === undefined)
                 return;
 
@@ -20,6 +22,8 @@
                 _storageArea[key] = val;
         };
         this.get = function(key) {
+            checkKey(key);
+
             if(_storageArea[key] === undefined)
                 return null;
 
@@ -32,6 +36,8 @@
             return _storageArea[key];
         };
         this.exists = function(key) {
+            checkKey(key);
+
             return _storageArea[key] !== undefined;
         };
         this.clear = function() {
@@ -52,6 +58,14 @@
             }
             return list;
         };
+
+        function checkKey(key)
+        {
+            if(typeof key !== 'string' && typeof key !== 'number')
+                throw new TypeError('Key must be string or numeric');
+
+            return true;
+        }
     };
 
     window.storage = new Storage();
