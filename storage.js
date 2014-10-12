@@ -100,10 +100,8 @@
         this.getKeys = function() {
             var list = [];
             for(var key in _storageArea)
-            {
-                if(_storageArea.hasOwnProperty(key))
-                    list.push(key);
-            }
+                list.push(key);
+
             return list;
         };
 
