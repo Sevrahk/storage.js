@@ -99,10 +99,10 @@
          */
         this.getKeys = function() {
             var list = [];
-            for(var i in _storageArea)
+            for(var key in _storageArea)
             {
-                if(_storageArea.hasOwnProperty(i))
-                    list.push(i);
+                if(_storageArea.hasOwnProperty(key))
+                    list.push(key);
             }
             return list;
         };
