@@ -93,6 +93,29 @@
         };
 
         /**
+        * Rename the selected key
+        *
+        * @param {String} key : Stored key
+        * @param {String} newKey : new name of your key
+        * @param {Boolean} [overwrite] : (Default false) if set to false the function will throw an error if the newKey already exists in the storage
+        */
+        this.rename = function(key, newKey, overwrite) {
+            overwrite = (overwrite !== undefined) ? overwrite : false;
+            if(key === newKey)
+                return;
+
+            checkKey(newKey);
+            if(overwrite === false && this.exists(newKey))
+                throw new TypeError('The new key name already exists in the storage. If you want to replace it set overwrite parameter to true.');
+
+            if(this.exists(key))
+            {
+                _storageArea[newKey] = _storageArea[key];
+                _storageArea.removeItem(key);
+            }
+        };
+
+        /**
          * Get all the stored keys.
          *
          * @returns {Array}
