@@ -130,7 +130,7 @@
 
         function checkKey(key)
         {
-            if(typeof key !== 'string' && typeof key !== 'number')
+            if((typeof key !== 'string' && typeof key !== 'number') || key.length === 0)
                 throw new TypeError('Key must be string or numeric');
 
             return true;
