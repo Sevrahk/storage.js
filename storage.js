@@ -1,5 +1,5 @@
 /*!
- * storage.js v1.0.0
+ * storage.js v1.1.0
  * https://github.com/Sevrahk/storage.js
  *
  * Copyright (c) 2014 Thomas BERTRAND
@@ -87,8 +87,56 @@
                 _storageArea.clear();
             else
             {
-                for(var i=0; i<arguments.length; i++)
+                for(var i in arguments)
                     _storageArea.removeItem(arguments[i]);
+            }
+        };
+
+        /**
+        * Rename the selected key
+        *
+        * @param {String} key : Stored key
+        * @param {String} newKey : new name of your key
+        * @param {Boolean} [overwrite] : (Default false) if set to false the function will throw an error if the newKey already exists in the storage
+        */
+        this.rename = function(key, newKey, overwrite) {
+            overwrite = (overwrite !== undefined) ? overwrite : false;
+            if(key === newKey)
+                return;
+
+            checkKey(newKey);
+            if(overwrite === false && this.exists(newKey))
+                throw new TypeError('The new key name already exists in the storage. If you want to replace it set overwrite parameter to true.');
+
+            if(this.exists(key))
+            {
+                _storageArea[newKey] = _storageArea[key];
+                _storageArea.removeItem(key);
+            }
+        };
+
+        /**
+        * Copy the keys to the other storage. (localStorage -> sessionStorage or sessionStorage -> localStorage)
+        *
+        * @example copyToOtherStorage(); <- copy all the keys to the other storage
+        * @example copyToOtherStorage('key1', 'key2'); <- copy key1 and key2 to the other storage
+        *
+        * @param {String} [key] : Stored key(s)
+        */
+        this.copyToOtherStorage = function() {
+            var storageToCopy = (_storageArea === window.localStorage) ? window.sessionStorage : window.localStorage;
+            if(arguments.length === 0)
+            {
+                for(var key in _storageArea)
+                    storageToCopy[key] = _storageArea[key];
+            }
+            else
+            {
+                for(var i in arguments)
+                {
+                    if(this.exists(arguments[i]))
+                        storageToCopy[arguments[i]] = _storageArea[arguments[i]];
+                }
             }
         };
 
@@ -99,18 +147,16 @@
          */
         this.getKeys = function() {
             var list = [];
-            for(var i in _storageArea)
-            {
-                if(_storageArea.hasOwnProperty(i))
-                    list.push(i);
-            }
+            for(var key in _storageArea)
+                list.push(key);
+
             return list;
         };
 
         function checkKey(key)
         {
-            if(typeof key !== 'string' && typeof key !== 'number')
-                throw new TypeError('Key must be string or numeric');
+            if((typeof key !== 'string' && typeof key !== 'number') || key.length === 0)
+                throw new TypeError('Key must be string or numeric.');
 
             return true;
         }
