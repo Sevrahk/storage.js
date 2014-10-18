@@ -70,6 +70,30 @@ storage.clear(key);
 storage.clear(key1, key2, ...);
 ```
 
+### rename(key, newKey[, overwrite])
+
+Rename the selected key by the newKey name.  
+If the newKey exists an exception will be raised except if the overwrite parameter is set to true.  
+`key` needs to be string or a number otherwise an exception is raised.  
+`newKey` needs to be string or a number otherwise an exception is raised.  
+`key` (optional) Boolean.
+
+```javascript
+storage.rename(key1, key2);
+storage.rename(key1, key2, true);
+```
+
+### copyToOtherStorage(key, newKey[, overwrite])
+
+Copy the keys to the other storage.  
+localStorage -> sessionStorage or sessionStorage -> localStorage  
+`key` (optional) needs to be string or a number otherwise an exception is raised.
+
+```javascript
+storage.copyToOtherStorage();
+storage.copyToOtherStorage(key1, key2);
+```
+
 ### getKeys()
 
 Get all the stored keys.
