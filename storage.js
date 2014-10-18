@@ -131,7 +131,7 @@
         function checkKey(key)
         {
             if((typeof key !== 'string' && typeof key !== 'number') || key.length === 0)
-                throw new TypeError('Key must be string or numeric');
+                throw new TypeError('Key must be string or numeric.');
 
             return true;
         }
