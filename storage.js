@@ -87,7 +87,7 @@
                 _storageArea.clear();
             else
             {
-                for(var i=0; i<arguments.length; i++)
+                for(var i in arguments)
                     _storageArea.removeItem(arguments[i]);
             }
         };
