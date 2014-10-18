@@ -116,6 +116,31 @@
         };
 
         /**
+        * Copy the keys to the other storage. (localStorage -> sessionStorage or sessionStorage -> localStorage)
+        *
+        * @example copyToOtherStorage(); <- copy all the keys to the other storage
+        * @example copyToOtherStorage('key1', 'key2'); <- copy key1 and key2 to the other storage
+        *
+        * @param {String} [key] : Stored key(s)
+        */
+        this.copyToOtherStorage = function() {
+            var storageToCopy = (_storageArea === window.localStorage) ? window.sessionStorage : window.localStorage;
+            if(arguments.length === 0)
+            {
+                for(var key in _storageArea)
+                    storageToCopy[key] = _storageArea[key];
+            }
+            else
+            {
+                for(var i in arguments)
+                {
+                    if(this.exists(arguments[i]))
+                        storageToCopy[arguments[i]] = _storageArea[arguments[i]];
+                }
+            }
+        };
+
+        /**
          * Get all the stored keys.
          *
          * @returns {Array}
