@@ -163,7 +163,6 @@
     };
 
     window.storage = new Storage();
-    window.storage.local = new Storage();
     window.storage.session = new Storage('session');
 
     return;
