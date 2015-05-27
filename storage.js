@@ -75,13 +75,13 @@
         };
 
         /**
-        * Clear the storage or delete the keys.
-        *
-        * @example clear(); <- clear the storage
-        * @example clear('key1', 'key2'); <- delete key1 and key2
-        *
-        * @param {String} [key] : Stored key(s)
-        */
+         * Clear the storage or delete the keys.
+         *
+         * @example clear(); <- clear the storage
+         * @example clear('key1', 'key2'); <- delete key1 and key2
+         *
+         * @param {String} [key] : Stored key(s)
+         */
         this.clear = function() {
             if(arguments.length === 0)
                 _storageArea.clear();
@@ -93,12 +93,12 @@
         };
 
         /**
-        * Rename the selected key
-        *
-        * @param {String} key : Stored key
-        * @param {String} newKey : new name of your key
-        * @param {Boolean} [overwrite] : (Default false) if set to false the function will throw an error if the newKey already exists in the storage
-        */
+         * Rename the selected key
+         *
+         * @param {String} key : Stored key
+         * @param {String} newKey : new name of your key
+         * @param {Boolean} [overwrite] : (Default false) if set to false the function will throw an error if the newKey already exists in the storage
+         */
         this.rename = function(key, newKey, overwrite) {
             overwrite = (overwrite !== undefined) ? overwrite : false;
             if(key === newKey)
@@ -116,13 +116,13 @@
         };
 
         /**
-        * Copy the keys to the other storage. (localStorage -> sessionStorage or sessionStorage -> localStorage)
-        *
-        * @example copyToOtherStorage(); <- copy all the keys to the other storage
-        * @example copyToOtherStorage('key1', 'key2'); <- copy key1 and key2 to the other storage
-        *
-        * @param {String} [key] : Stored key(s)
-        */
+         * Copy the keys to the other storage. (localStorage -> sessionStorage or sessionStorage -> localStorage)
+         *
+         * @example copyToOtherStorage(); <- copy all the keys to the other storage
+         * @example copyToOtherStorage('key1', 'key2'); <- copy key1 and key2 to the other storage
+         *
+         * @param {String} [key] : Stored key(s)
+         */
         this.copyToOtherStorage = function() {
             var storageToCopy = (_storageArea === window.localStorage) ? window.sessionStorage : window.localStorage;
             if(arguments.length === 0)
