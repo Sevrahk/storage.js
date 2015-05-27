@@ -75,21 +75,25 @@
         };
 
         /**
-         * Clear the storage or delete the keys.
+         * Remove the selected key(s)
          *
-         * @example clear(); <- clear the storage
-         * @example clear('key1', 'key2'); <- delete key1 and key2
+         * @example remove('key1');
+         * @example remove('key1', 'key2'); <- delete key1 and key2
          *
-         * @param {String} [key] : Stored key(s)
+         * @param {String} [key] : Stored key
+         */
+        this.remove = function() {
+            for(var i in arguments)
+                _storageArea.removeItem(arguments[i]);
+        };
+
+        /**
+         * Clear the storage.
+         *
+         * @example clear();
          */
         this.clear = function() {
-            if(arguments.length === 0)
-                _storageArea.clear();
-            else
-            {
-                for(var i in arguments)
-                    _storageArea.removeItem(arguments[i]);
-            }
+            _storageArea.clear();
         };
 
         /**
