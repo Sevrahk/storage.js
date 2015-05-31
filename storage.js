@@ -8,7 +8,12 @@
 (function(){
     'use strict';
 
-    function Storage(storageAreaName)
+    /**
+     * StorageManager
+     *
+     * @param {String} storageAreaName
+     */
+    function StorageManager(storageAreaName)
     {
         var _storageArea = (storageAreaName === 'session') ? window.sessionStorage : window.localStorage;
 
@@ -166,8 +171,8 @@
         }
     };
 
-    window.storage = new Storage();
-    window.storage.session = new Storage('session');
+    window.storage = new StorageManager();
+    window.storage.session = new StorageManager('session');
 
     return;
 })();
