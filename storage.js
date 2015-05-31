@@ -15,164 +15,184 @@
      */
     function StorageManager(storageAreaName)
     {
-        var _storageArea = (storageAreaName === 'session') ? window.sessionStorage : window.localStorage;
-
-        /**
-         * Check if you the storage is supported by the browser
-         *
-         * @returns {Boolean}
-         */
-        this.isSupported = function() {
-            return typeof _storageArea !== 'undefined';
-        };
-
-        /**
-         * Save variable in the storage.
-         *
-         * @param {String} key : Storage key
-         * @param {Mixed} val : Value
-         */
-        this.set = function(key, val) {
-            checkKey(key);
-
-            if(val === undefined)
-                return;
-
-            if(typeof val === 'function')
-                return;
-            else if(typeof val === 'object')
-                _storageArea[key] = JSON.stringify(val);
-            else
-                _storageArea[key] = val;
-        };
-
-        /**
-         * Get the value of the entered key.
-         *
-         * @param {String} key : Stored key
-         * @returns {String|Array|Object}
-         */
-        this.get = function(key) {
-            checkKey(key);
-
-            if(_storageArea[key] === undefined)
-                return null;
-
-            try {
-                return JSON.parse(_storageArea[key]);
-            }
-            catch(ex) {
-                return _storageArea[key];
-            }
-            return _storageArea[key];
-        };
-
-        /**
-         * Check if the key exists in the storage.
-         *
-         * @param {String} key : Stored key
-         * @returns {Boolean}
-         */
-        this.exists = function(key) {
-            checkKey(key);
-
-            return _storageArea[key] !== undefined;
-        };
-
-        /**
-         * Remove the selected key(s)
-         *
-         * @example remove('key1');
-         * @example remove('key1', 'key2'); <- delete key1 and key2
-         *
-         * @param {String} [key] : Stored key
-         */
-        this.remove = function() {
-            for(var i in arguments)
-                _storageArea.removeItem(arguments[i]);
-        };
-
-        /**
-         * Clear the storage.
-         *
-         * @example clear();
-         */
-        this.clear = function() {
-            _storageArea.clear();
-        };
-
-        /**
-         * Rename the selected key
-         *
-         * @param {String} key : Stored key
-         * @param {String} newKey : new name of your key
-         * @param {Boolean} [overwrite] : (Default false) if set to false the function will throw an error if the newKey already exists in the storage
-         */
-        this.rename = function(key, newKey, overwrite) {
-            overwrite = (overwrite !== undefined) ? overwrite : false;
-            if(key === newKey)
-                return;
-
-            checkKey(newKey);
-            if(overwrite === false && this.exists(newKey))
-                throw new TypeError('The new key name already exists in the storage. If you want to replace it set overwrite parameter to true.');
-
-            if(this.exists(key))
-            {
-                _storageArea[newKey] = _storageArea[key];
-                _storageArea.removeItem(key);
-            }
-        };
-
-        /**
-         * Copy the keys to the other storage. (localStorage -> sessionStorage or sessionStorage -> localStorage)
-         *
-         * @example copyToOtherStorage(); <- copy all the keys to the other storage
-         * @example copyToOtherStorage('key1', 'key2'); <- copy key1 and key2 to the other storage
-         *
-         * @param {String} [key] : Stored key(s)
-         */
-        this.copyToOtherStorage = function() {
-            var storageToCopy = (_storageArea === window.localStorage) ? window.sessionStorage : window.localStorage;
-            if(arguments.length === 0)
-            {
-                for(var key in _storageArea)
-                    storageToCopy[key] = _storageArea[key];
-            }
-            else
-            {
-                for(var i in arguments)
-                {
-                    if(this.exists(arguments[i]))
-                        storageToCopy[arguments[i]] = _storageArea[arguments[i]];
-                }
-            }
-        };
-
-        /**
-         * Get all the stored keys.
-         *
-         * @returns {Array}
-         */
-        this.getKeys = function() {
-            var list = [];
-            for(var key in _storageArea)
-                list.push(key);
-
-            return list;
-        };
-
-        function checkKey(key)
+        this._storageArea;
+        switch(storageAreaName)
         {
-            if((typeof key !== 'string' && typeof key !== 'number') || key.length === 0)
-                throw new TypeError('Key must be string or numeric.');
+            case 'session':
+                this._storageArea = window.sessionStorage;
+                break;
+            default:
+                this._storageArea = window.localStorage;
+                break;
+        }
+    }
 
-            return true;
+    /**
+     * Save variable in the storage.
+     *
+     * @param {String} key : Storage key
+     * @param {Mixed} val : Value
+     */
+    StorageManager.prototype.set = function(key, val) {
+        this.checkKey(key);
+
+        if(val === undefined || typeof val === 'function')
+            return;
+
+        if(typeof val === 'object')
+            val = JSON.stringify(val);
+
+        this._storageArea[key] = val;
+    };
+
+    /**
+     * Get the value of the entered key.
+     *
+     * @param {String} key : Stored key
+     * @returns {String|Array|Object}
+     */
+    StorageManager.prototype.get = function(key) {
+        this.checkKey(key);
+
+        if(this._storageArea[key] === undefined)
+            return undefined;
+
+        try {
+            return JSON.parse(this._storageArea[key]);
+        }
+        catch(ex) {
+            return this._storageArea[key];
+        }
+        return this._storageArea[key];
+    };
+
+    /**
+     * Check if the key exists in the storage.
+     *
+     * @param {String} key : Stored key
+     * @returns {Boolean}
+     */
+    StorageManager.prototype.exists = function(key) {
+        this.checkKey(key);
+
+        return this._storageArea[key] !== undefined;
+    };
+
+    /**
+     * Remove the selected key(s)
+     *
+     * @example remove('key1');
+     * @example remove(['key1', 'key2']); <- delete key1 and key2
+     *
+     * @param {String|Array} [keys] : Stored key(s)
+     */
+    StorageManager.prototype.remove = function(keys) {
+        if(keys instanceof Array)
+        {
+            for(var i in keys)
+               this._storageArea.removeItem(keys[i]);
+        }
+        else
+            this._storageArea.removeItem(keys);
+    };
+
+    /**
+     * Clear the storage.
+     *
+     * @example clear();
+     */
+    StorageManager.prototype.clear = function() {
+        this._storageArea.clear();
+    };
+
+    /**
+     * Rename the selected key
+     *
+     * @param {String} key : Stored key
+     * @param {String} newKey : new name of your key
+     * @param {Boolean} [overwrite] : (Default false) if set to false the function will throw an error if the newKey already exists in the storage
+     */
+    StorageManager.prototype.rename = function(key, newKey, overwrite) {
+        overwrite = (overwrite !== undefined) ? overwrite : false;
+        if(key === newKey)
+            return;
+
+        this.checkKey(newKey);
+        if(overwrite === false && this.exists(newKey))
+            throw new TypeError('The new key name already exists in the storage. If you want to replace it set overwrite parameter to true.');
+
+        if(this.exists(key))
+        {
+            this.set(newKey, this.get(key));
+            this.remove(key);
         }
     };
 
-    window.storage = new StorageManager();
-    window.storage.session = new StorageManager('session');
+    /**
+     * Copy the keys to the other storage. (localStorage -> sessionStorage or sessionStorage -> localStorage)
+     *
+     * @example copyToOtherStorage(); <- copy all the keys to the other storage
+     * @example copyToOtherStorage('key1', 'key2'); <- copy key1 and key2 to the other storage
+     *
+     * @param {String} [key] : Stored key(s)
+     */
+    StorageManager.prototype.copyToOtherStorage = function() {
+        var targetedStorage = (this._storageArea === window.localStorage) ? window.sessionStorage : window.localStorage;
+
+        if(typeof targetedStorage === 'undefined')
+        {
+            console.error('The other storage is not available.');
+            return;
+        }
+
+        if(arguments.length === 0)
+        {
+            for(var key in this._storageArea)
+                targetedStorage[key] = this._storageArea[key];
+        }
+        else
+        {
+            for(var i in arguments)
+            {
+                if(this.exists(arguments[i]))
+                    targetedStorage[arguments[i]] = this._storageArea[arguments[i]];
+            }
+        }
+    };
+
+    /**
+     * Get all the stored keys.
+     *
+     * @returns {Array}
+     */
+    StorageManager.prototype.getKeys = function() {
+        var list = [];
+        for(var key in this._storageArea)
+            list.push(key);
+
+        return list;
+    };
+
+    /**
+     * Check if the entered key can be used in the storage
+     *
+     * @example checkKey('key1');
+     */
+    StorageManager.prototype.checkKey = function(key)
+    {
+        if((typeof key !== 'string' && typeof key !== 'number') || key.length === 0)
+            throw new TypeError('Key must be string or numeric.');
+
+        return true;
+    };
+
+    //Initialization
+    window.storage = Object;
+    if(typeof window.localStorage !== 'undefined')
+        window.storage = new WindowStorageManager('local');
+
+    if(typeof window.sessionStorage !== 'undefined')
+        window.storage.session = new WindowStorageManager('session');
 
     return;
 })();
