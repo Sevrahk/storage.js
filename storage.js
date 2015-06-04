@@ -1,5 +1,5 @@
 /*!
- * storage.js v1.1.0
+ * storage.js v1.2.0
  * https://github.com/Sevrahk/storage.js
  *
  * Copyright (c) 2014 Thomas BERTRAND
