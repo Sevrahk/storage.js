@@ -1,3 +1,11 @@
+# 1.2.0 / 2015-06-04
+* Add remove() function
+* Change clear() function (only full clean)
+* Remove isSupported() function
+* Rename Storage to StorageManager
+* Implement WindowStorageManager
+* Implement CookieStorageManager
+
 # 1.1.0 / 2014-10-18
 * Add rename() function
 * Add copyToOtherStorage() function

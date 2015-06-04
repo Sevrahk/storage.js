@@ -1,10 +1,11 @@
 # storage.js
 
-storage.js is library to easily manage data storage of key/value pair data in browsers.
+storage.js is a library to easily manage data storage of key/value pair in browsers.
 
-With storage.js can manage both:
-* **localStorage** to store data and retreve them even if you closed your browser
+With storage.js can manage:
+* **localStorage** to store data and retrieve them even if you closed your browser.
 * **sessionStorage** to store data only for the current session.
+* **cookies** if the localStorage is not available.
 
 storage.js is a standalone library, it works well with any other JavaScript library like jQuery, jQueryMobile, Prototype, MooTools...
 
@@ -13,18 +14,17 @@ Installation
 To use storage.js library you just need to include it in your html documents.
 
 ``` html
-<script src='storage.min.js'></script>
+<script src='storage-1.2.0.min.js'></script>
 ```
 
 Usage
 -----
-To manage the **localStorage** you need to call `storage.local` or directly and simply `storage`.  
+To manage the **localStorage**/**cookies** you need to call the object `storage`.  
 To manage the **sessionStorage** you need to call `storage.session`.
 
 ###Example
 ```javascript
-storage.set(key, value); //set a new value in the localStorage
-storage.local.set(key, value); //similar as storage.set() function
+storage.set(key, value); //set a new value in the localStorage (or cookies)
 storage.session.set(key, value); //set a new value in the sessionStorage
 ```
 
@@ -59,15 +59,22 @@ Check if the key is existing in the localStorage/sessionStorage.
 storage.exists(key);
 ```
 
-### clear([key])
+### remove(keys)
 
-Clear the localStorage/sessionStorage or delete the selected keys.  
-`key` (optional) needs to be string or a number otherwise an exception is raised.
+Remove the selected key or array of keys from the storage.  
+`keys` needs to be string or a number or and Array of strings otherwise an exception is raised.
+
+```javascript
+storage.remove(key);
+storage.remove([key1, key2, ...]);
+```
+
+### clear()
+
+Clear the localStorage/sessionStorage.  
 
 ```javascript
 storage.clear();
-storage.clear(key);
-storage.clear(key1, key2, ...);
 ```
 
 ### rename(key, newKey[, overwrite])
@@ -100,14 +107,6 @@ Get all the stored keys.
 
 ```javascript
 storage.getKeys();
-```
-
-### isSupported()
-
-Check if you the storage is supported by the browser
-
-```javascript
-storage.isSupported();
 ```
 
 ## Browser support
