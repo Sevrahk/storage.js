@@ -3,7 +3,7 @@
 storage.js is library to easily manage data storage of key/value pair data in browsers.
 
 With storage.js can manage both:
-* **localStorage** to store data and retreve them even if you closed your browser
+* **localStorage** to store data and retrieve them even if you closed your browser
 * **sessionStorage** to store data only for the current session.
 
 storage.js is a standalone library, it works well with any other JavaScript library like jQuery, jQueryMobile, Prototype, MooTools...
