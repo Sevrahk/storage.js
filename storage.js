@@ -2,7 +2,7 @@
  * storage.js v1.2.1
  * https://github.com/Sevrahk/storage.js
  *
- * Copyright (c) 2014 Thomas BERTRAND
+ * Copyright (c) 2015 Thomas BERTRAND
  * Released under the MIT license
  */
 (function(){
