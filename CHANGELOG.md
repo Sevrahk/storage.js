@@ -1,3 +1,6 @@
+# 1.2.1 / 2015-06-16
+* Fix access to cookies
+
 # 1.2.0 / 2015-06-04
 * Add remove() function
 * Change clear() function (only full clean)
