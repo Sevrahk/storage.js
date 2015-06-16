@@ -22,7 +22,6 @@
                 this._storageArea = window.sessionStorage;
                 break;
             case 'cookie':
-                this._storageArea = document.cookie;
                 this._cookieValidityTime = 365*24*60*60;
                 break;
             default:
@@ -237,7 +236,7 @@
         else
             expires = '; max-age=' + cookieValidityTime;
 
-        this._storageArea = key + '=' + encodeURIComponent(val) + expires;
+        document.cookie = key + '=' + encodeURIComponent(val) + expires;
     };
 
     /**
@@ -251,7 +250,7 @@
 
         key = key + '=';
         var index = -1,
-            cookies = this._storageArea.split(';');
+            cookies = document.cookie.split(';');
 
         for(var i=0; i<cookies.length; i++)
         {
@@ -322,7 +321,7 @@
      * @returns {Array}
      */
     CookieStorageManager.prototype.getKeys = function() {
-        var cookies = this._storageArea.split(';'),
+        var cookies = document.cookie.split(';'),
             list = [];
 
         for(var i=0; i<cookies.length; i++)
