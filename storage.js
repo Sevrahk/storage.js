@@ -76,6 +76,7 @@
         StorageManager.call(this, storageAreaName);
     }
     WindowStorageManager.prototype = Object.create(StorageManager.prototype);
+    WindowStorageManager.prototype.constructor = WindowStorageManager;
 
     /**
      * Save variable in the storage.
@@ -208,6 +209,7 @@
         StorageManager.call(this, 'cookie');
     }
     CookieStorageManager.prototype = Object.create(StorageManager.prototype);
+    CookieStorageManager.prototype.constructor = CookieStorageManager;
 
     /**
      * Save variable in the storage.
