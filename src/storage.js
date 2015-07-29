@@ -1,5 +1,5 @@
 /*!
- * storage.js v1.2.1
+ * storage.js v1.2.2
  * https://github.com/Sevrahk/storage.js
  *
  * Copyright (c) 2015 Thomas BERTRAND
@@ -15,7 +15,7 @@
      */
     function StorageManager(storageAreaName)
     {
-        this._storageArea;
+        this._storageArea = null;
         switch(storageAreaName)
         {
             case 'session':
@@ -76,6 +76,7 @@
         StorageManager.call(this, storageAreaName);
     }
     WindowStorageManager.prototype = Object.create(StorageManager.prototype);
+    WindowStorageManager.prototype.constructor = WindowStorageManager;
 
     /**
      * Save variable in the storage.
@@ -208,6 +209,7 @@
         StorageManager.call(this, 'cookie');
     }
     CookieStorageManager.prototype = Object.create(StorageManager.prototype);
+    CookieStorageManager.prototype.constructor = CookieStorageManager;
 
     /**
      * Save variable in the storage.
@@ -252,7 +254,7 @@
         var index = -1,
             cookies = document.cookie.split(';');
 
-        for(var i=0; i<cookies.length; i++)
+        for(var i = 0, len = cookies.length; i < len; i++)
         {
             var cookie = cookies[i];
             if(cookie.trim().indexOf(key) === 0)
@@ -324,7 +326,7 @@
         var cookies = document.cookie.split(';'),
             list = [];
 
-        for(var i=0; i<cookies.length; i++)
+        for(var i = 0, len = cookies.length; i < len; i++)
         {
             var cookie = cookies[i];
             cookie = cookie.substring(0, cookie.indexOf('='));
