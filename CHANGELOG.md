@@ -1,3 +1,6 @@
+# 1.2.2 / 2015-07-29
+* Global optimization
+
 # 1.2.1 / 2015-06-16
 * Fix access to cookies
 
