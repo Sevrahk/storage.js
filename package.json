@@ -1,6 +1,6 @@
 {
   "name": "storage.js",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "JavaScript library that let you easily manage localStorage and sessionStorage",
   "main": "storage.js",
   "dependencies": {
