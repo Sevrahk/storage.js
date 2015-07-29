@@ -254,7 +254,7 @@
         var index = -1,
             cookies = document.cookie.split(';');
 
-        for(var i=0; i<cookies.length; i++)
+        for(var i = 0, len = cookies.length; i < len; i++)
         {
             var cookie = cookies[i];
             if(cookie.trim().indexOf(key) === 0)
@@ -326,7 +326,7 @@
         var cookies = document.cookie.split(';'),
             list = [];
 
-        for(var i=0; i<cookies.length; i++)
+        for(var i = 0, len = cookies.length; i < len; i++)
         {
             var cookie = cookies[i];
             cookie = cookie.substring(0, cookie.indexOf('='));
