@@ -15,7 +15,7 @@
      */
     function StorageManager(storageAreaName)
     {
-        this._storageArea;
+        this._storageArea = null;
         switch(storageAreaName)
         {
             case 'session':
