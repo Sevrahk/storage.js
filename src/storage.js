@@ -216,6 +216,7 @@
      *
      * @param {String} key : Storage key
      * @param {Mixed} val : Value
+     * @param {Mixed} isCreated : Boolean
      */
     CookieStorageManager.prototype.set = function(key, val, isCreated) {
         isCreated = (typeof isCreated === 'undefined') ? true : isCreated;
