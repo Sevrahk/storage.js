@@ -1,3 +1,6 @@
+# 1.3.0 / 2016-04-19
+* Implement storage.cookie object
+
 # 1.2.2 / 2015-07-29
 * Global optimization
 

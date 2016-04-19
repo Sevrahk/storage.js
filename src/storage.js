@@ -1,5 +1,5 @@
 /*!
- * storage.js v1.2.2
+ * storage.js v1.3.0
  * https://github.com/Sevrahk/storage.js
  *
  * Copyright (c) 2015 Thomas BERTRAND
@@ -216,6 +216,7 @@
      *
      * @param {String} key : Storage key
      * @param {Mixed} val : Value
+     * @param {Mixed} isCreated : Boolean
      */
     CookieStorageManager.prototype.set = function(key, val, isCreated) {
         isCreated = (typeof isCreated === 'undefined') ? true : isCreated;
@@ -340,8 +341,9 @@
     window.storage = Object;
     if(typeof window.localStorage !== 'undefined')
         window.storage = new WindowStorageManager('local');
-    else
-        window.storage = new CookieStorageManager();
+
+    if(typeof document.cookie !== 'undefined')
+        window.storage.cookie = new CookieStorageManager();
 
     if(typeof window.sessionStorage !== 'undefined')
         window.storage.session = new WindowStorageManager('session');
