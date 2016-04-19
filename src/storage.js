@@ -340,8 +340,9 @@
     window.storage = Object;
     if(typeof window.localStorage !== 'undefined')
         window.storage = new WindowStorageManager('local');
-    else
-        window.storage = new CookieStorageManager();
+
+    if(typeof document.cookie !== 'undefined')
+        window.storage.cookie = new CookieStorageManager();
 
     if(typeof window.sessionStorage !== 'undefined')
         window.storage.session = new WindowStorageManager('session');
