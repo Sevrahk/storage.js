@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     p = require('./package.json')
     ;
 
-//Folders
+//Folders and annotation
 var src = 'src/',
     dest = 'dist/',
     annotation = '/* ' + p.name + ' v' + p.version + ' | Copyright (c) ' + new Date().getFullYear() + ' ' + p.homepage + ' | ' + p.license + ' license */\n';
